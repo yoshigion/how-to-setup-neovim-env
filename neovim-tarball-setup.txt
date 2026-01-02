@@ -1,0 +1,27 @@
+ 2016  ll /var/lib/dpkg/alternatives/
+ 2017  ll /var/lib/dpkg/alternatives/editor
+ 2018  file /var/lib/dpkg/alternatives/editor
+
+ll /etc/alternatives/ | grep -v vnc | grep -v dvi | grep vi
+
+vi ~/.bashrc
+
+### for neovim recent
+NEOVIM_PATH="/opt/neovim/nvim-linux-x86_64"
+export PATH="$NEOVIM_PATH/bin:$PATH"
+
+sudo update-alternatives --install /usr/bin/editor editor /opt/neovim/nvim-linux-x86_64/bin/nvim 30
+sudo update-alternatives --install /usr/bin/vi vi /opt/neovim/nvim-linux-x86_64/bin/nvim 30
+sudo update-alternatives --install /usr/bin/vim vim /opt/neovim/nvim-linux-x86_64/bin/nvim 30
+sudo update-alternatives --install /usr/bin/vimdiff vimdiff /opt/neovim/nvim-linux-x86_64/libexec/vimdiff 30
+sudo update-alternatives --install /usr/bin/view view /opt/neovim/nvim-linux-x86_64/libexec/view 30
+sudo update-alternatives --config editor
+sudo update-alternatives --config vi
+sudo update-alternatives --config vim
+sudo update-alternatives --config vimdiff
+sudo update-alternatives --config view
+
+ 2028  sudo update-alternatives --install /usr/bin/view view /opt/neovim/nvim-linux-x86_64/bin/nvim 30
+ 2031  sudo update-alternatives --remove view /opt/neovim/nvim-linux-x86_64/bin/nvim
+ 2032  sudo update-alternatives --install /usr/bin/view view /opt/neovim/nvim-linux-x86_64/libexec/view 30
+

@@ -1,0 +1,93 @@
+[Supported Newer GLIBC]
+(install neovim stable from ppa)
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo apt install neovim
+
+(install recent stable neovim at /opt/neovim/)
+sudo mkdir -p /opt/neovim
+sudo chown obayashi.obayashi /opt/neovim
+cd /opt/neovim
+wget https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.tar.gz
+tar xvf nvim-linux-x86_64.tar.gz
+((copy and edit ex/rview/rvim/view/vimdiff from stable ppa))
+cd nvim-linux-x86_64
+cp -rp /usr/libexec/neovim ./libexec
+cd libexec
+find . -name "[a-z]*" -exec sed -i -e "/nvim/s|/usr/bin|/opt/neovim/nvim-linux-x86_64/bin|" {} \;
+
+(setup ~/.bashrc)
+vi ~/.bashrc
+### for neovim recent
+NEOVIM_PATH="/opt/neovim/nvim-linux-x86_64"
+export PATH="$NEOVIM_PATH/bin:$PATH"
+
+(setup alternatives)
+sudo update-alternatives --install /usr/bin/editor  editor  /opt/neovim/nvim-linux-x86_64/bin/nvim 30
+sudo update-alternatives --install /usr/bin/vi      vi      /opt/neovim/nvim-linux-x86_64/bin/nvim 30
+sudo update-alternatives --install /usr/bin/vim     vim     /opt/neovim/nvim-linux-x86_64/bin/nvim 30
+sudo update-alternatives --install /usr/bin/view    view    /opt/neovim/nvim-linux-x86_64/libexec/view 30
+sudo update-alternatives --install /usr/bin/vimdiff vimdiff /opt/neovim/nvim-linux-x86_64/libexec/vimdiff 30
+
+sudo update-alternatives --config editor
+sudo update-alternatives --config vi
+sudo update-alternatives --config vim
+sudo update-alternatives --config view
+sudo update-alternatives --config vimdiff
+
+
+
+[cf. Unsupported Older GLIBC]
+(https://github.com/neovim/neovim-releases/releases/download/v0.11.4/nvim-linux-x86_64.deb)
+
+####
+@[obayashi@budp neovim]$ sudo gdebi nvim-linux-x86_64.deb
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Reading state information... Done
+This package is uninstallable
+Dependency is not satisfiable: libc6 (>= 2.34)
+
+@[obayashi@budp neovim]$ sudo dpkg -i nvim-linux-x86_64.deb
+Selecting previously unselected package neovim.
+(Reading database ... 326676 files and directories currently installed.)
+Preparing to unpack nvim-linux-x86_64.deb ...
+Unpacking neovim (0.11.4) ...
+dpkg: dependency problems prevent configuration of neovim:
+ neovim depends on libc6 (>= 2.34); however:
+  Version of libc6:amd64 on system is 2.31-0ubuntu9.18.
+
+dpkg: error processing package neovim (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for bamfdaemon (0.5.3+18.04.20180207.2-0ubuntu2) ...
+Rebuilding /usr/share/applications/bamf-2.index...
+Processing triggers for gnome-menus (3.36.0-1ubuntu1) ...
+Processing triggers for desktop-file-utils (0.24-1ubuntu3) ...
+Processing triggers for mime-support (3.64ubuntu1) ...
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+Processing triggers for man-db (2.9.1-1) ...
+Errors were encountered while processing:
+ neovim
+####
+
+####
+@[obayashi@budp neovim]$ sudo dpkg -l | grep neovim
+iU  neovim                                     0.11.4                               amd64        Vim-fork focused on extensibility and usability.
+
+@[obayashi@budp neovim]$ sudo dpkg --purge neovim
+(Reading database ... 328815 files and directories currently installed.)
+Removing neovim (0.11.4) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+Processing triggers for bamfdaemon (0.5.3+18.04.20180207.2-0ubuntu2) ...
+Rebuilding /usr/share/applications/bamf-2.index...
+Processing triggers for gnome-menus (3.36.0-1ubuntu1) ...
+Processing triggers for desktop-file-utils (0.24-1ubuntu3) ...
+Processing triggers for mime-support (3.64ubuntu1) ...
+####
+
+(https://github.com/neovim/neovim-releases/releases/download/v0.11.4/nvim-linux-x86_64.tar.gz)
+
+
+
+
